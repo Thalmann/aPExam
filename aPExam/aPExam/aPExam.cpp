@@ -8,11 +8,13 @@
 #include <list>
 #include <map>
 #include <string>
+#include "LineSegment.h"
+
 
 using namespace std;
 
-//Showing how concise and readable the use of iterators is
-void containerIteration(){
+//Showing how concise and readable the use of iterators are
+void vectorIteration(){
 	vector<int> v{ 1, 2, 3 };
 
 	//Before iterators - the C way:
@@ -35,23 +37,21 @@ void containerIteration(){
 		cout << it << endl;
 }
 
+//Showing the member syntax
+void mapIteration(){
+	map<int, LineSegment> m{};
+	m[1] = LineSegment(0,0,2,2);
+	m[2] = LineSegment(1,1,3,3);
+	m[3] = LineSegment(1,2,4,5);
+
+	for (auto &it : m)
+		cout << "Point " + it.first << it.second << endl;
+}
+
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	containerIteration();
-	
-	list<int> l{ 3, 2, 1 };
-	map<string, int> m{};
-	m["one"] = 1;
-	m["two"] = 2;
-	m["three"] = 3;
-
-	map<int, int> m2{};
-	m2[1] = 1;
-	m2[2] = 2;
-	m2[3] = 3;
-
-	
+	vectorIteration();
 
 
 	return 0;
