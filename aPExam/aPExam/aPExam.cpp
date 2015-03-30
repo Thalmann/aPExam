@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-#include "point.h"
 #include <iostream>
 #include <vector>
 #include <iterator>
@@ -40,8 +39,6 @@ void containerIteration(){
 int _tmain(int argc, _TCHAR* argv[])
 {
 	containerIteration();
-
-	auto p = ::Point{ 1, 2 };
 	
 	list<int> l{ 3, 2, 1 };
 	map<string, int> m{};
