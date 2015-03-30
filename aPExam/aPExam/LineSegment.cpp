@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "LineSegment.h"
 #include <iostream>
+#include <time.h>
+#include <algorithm>
 
 LineSegment::LineSegment(){}
 
@@ -26,8 +28,16 @@ int LineSegment::getBY() const{
 	return by;
 }
 
+double LineSegment::distance() const{
+	return sqrt(pow(ax-bx,2) + pow(ay-by,2));
+}
+
 std::ostream& operator<<(std::ostream& o, const LineSegment& l){
-	return o << "Point a : (" << l.getAX() << "," << l.getAY() << ") " << "Point b : (" << l.getBX() << "," << l.getBY() << ").";
+	return o << "Point a: (" << l.getAX() << "," << l.getAY() << ") " << "Point b: (" << l.getBX() << "," << l.getBY() << ").";
+}
+
+bool operator < (const LineSegment& _this, const LineSegment& other){
+	return std::min(_this.getAX(), _this.getBX()) < std::min(other.getAX(), other.getBX());
 }
 
 LineSegment::~LineSegment()

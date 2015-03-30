@@ -12,8 +12,10 @@ public:
 	int getAY() const;
 	int getBX() const;
 	int getBY() const;
+	double distance() const;
 	~LineSegment();
 };
 
 std::ostream& operator<<(std::ostream&, const LineSegment&);
 
+bool operator < (const LineSegment& _this, const LineSegment& other);
