@@ -169,27 +169,23 @@ void testOfIncrementOperation(){
 // ########################### MAIN ##############################################
 int _tmain(int argc, _TCHAR* argv[])
 {
-	/*
 	vectorIteration();
 	mapIteration();
 
 	cout << endl << endl;
 
-	printDistance();
-
-	cout << endl << endl;
-
 	sortt();
 
-	iteratorOperations();*/
+	iteratorOperations();
 
+	cout << endl << endl;
 
 	//######################################
 	// For loop that runs the test method of post- and pre-increment
 	//#####################################
-	/*cout << "Starting performance test of post- and pre-increment of iterators(this can take several minutes)" << endl;
+	cout << "Starting performance test of post- and pre-increment of iterators(this can take several minutes)" << endl;
 	for (int i = 0; i < 5; ++i)
-		testOfIncrementOperation();*/
+		testOfIncrementOperation();
 	
 
 	return 0;
