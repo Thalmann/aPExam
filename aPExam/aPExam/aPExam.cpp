@@ -17,6 +17,7 @@
 using namespace std;
 
 
+//#################### HELPER FUNCTIONS #####################
 template <typename Container>
 void printSequenceContainer(Container con){
 	for (const auto& it : con)
@@ -24,10 +25,33 @@ void printSequenceContainer(Container con){
 	cout << endl << endl;
 }
 
-
 LineSegment l1 = LineSegment(0, 0, 2, 2);
 LineSegment l2 = LineSegment(1, 1, 3, 3);
 LineSegment l3 = LineSegment(1, 2, 4, 5);
+
+//Prints the distance between all points
+void printDistance(vector<LineSegment> ls){
+
+	printSequenceContainer(ls);
+
+	cout << "Distance between points:" << endl;
+	for (auto it = ls.begin(); it != ls.end(); ++it)
+		cout << it->distance() << endl;
+}
+
+// Generates a vector with a given size of line segments which have random coordinates between 1-10
+void randomSequenceOfLineSegments(vector<LineSegment>& ls, long double size){
+	srand(time_t(NULL));
+	for (int i = 0; i < size; i++)
+	{
+		ls.push_back(LineSegment(rand() % 10 + 1, rand() % 10 + 1, rand() % 10 + 1, rand() % 10 + 1));
+	}
+}
+
+// #######################################################
+
+
+// ############ BASIC ITERATOR USAGE ######################
 
 //Showing how concise and readable the use of iterators are
 void vectorIteration(){
@@ -70,38 +94,6 @@ void mapIteration(){
 		cout << it.second << endl;
 }
 
-//Prints the distance between all points
-void printDistance(vector<LineSegment> ls){
-
-	printSequenceContainer(ls);
-
-	cout << "Distance between points:" << endl;
-	for (auto it = ls.begin(); it != ls.end(); ++it)
-		cout << it->distance() << endl;
-}
-
-void randomSequenceOfLineSegments(vector<LineSegment>& ls, int size){
-	srand(time_t(NULL));
-	for (int i = 0; i < size; i++)
-	{
-		ls.push_back(LineSegment(rand() % 10 + 1, rand() % size + 1, rand() % size + 1, rand() % size + 1));
-	}
-}
-
-
-void sortt(){
-	vector<LineSegment> ls;
-	randomSequenceOfLineSegments(ls, 10);
-	
-	cout << "unsorted: " << endl;
-	printSequenceContainer(ls);
-
-	sort(ls.begin(), ls.end());
-
-	cout << "sorted: " << endl;
-	printSequenceContainer(ls);
-}
-
 
 //Showing some of the iterator operations, in particular how the sunscripting operator is not moving the iterator and that it is possible to increment and decrement 
 void iteratorOperations(){
@@ -117,8 +109,29 @@ void iteratorOperations(){
 	cout << "First element using the SAME iterator by post-decrementing two times: " << *----it << endl;
 	cout << "Using subcripting(it[n]) the iterator will NOT move: " << "Iterators pos: " << *it << " The last element: " << it[ls.size() - 1] << endl;
 }
+// ##################################################################
 
 
+// ################## ITERATORS AS THE GLUE #######################
+//Showing how the iterator is the glue between containers and algorithm, specificly using a vector of line segments
+// and sort them by having overloaded '<' on the line segment class
+void sortt(){
+	vector<LineSegment> ls;
+	randomSequenceOfLineSegments(ls, 10);
+
+	cout << "unsorted: " << endl;
+	printSequenceContainer(ls);
+
+	sort(ls.begin(), ls.end());
+
+	cout << "sorted: " << endl;
+	printSequenceContainer(ls);
+}
+
+//########################################################
+
+// ################### PERFORMANCE TEST OF POST- and PRE-INCREMENT ##############################
+//A method that tests the performance of the post- and pre-increment operations for iterators
 void testOfIncrementOperation(){
 	vector<LineSegment> ls;
 	randomSequenceOfLineSegments(ls, 9999999);
@@ -126,25 +139,34 @@ void testOfIncrementOperation(){
 	vector<double> distances1;
 	vector<double> distances2;
 
-	const long double startFirst = time(0);
+	auto startFirst = time(0);
 	cout << "Copy start time: " << startFirst << endl;
-	for (auto it : ls){
-		distances1.push_back(it.distance());
+
+	// Using post-increment operation
+	for (auto it = ls.begin(); it != ls.end(); it++){
+		distances1.push_back(it->distance());
 	}
 
-	const long double startSecond = time(0);
+	auto startSecond = time(0);
 	cout << "Ref start time: " << startSecond << endl;
-	for (auto& it : ls){
-		distances2.push_back(it.distance());
+
+	// Using pre-increment operation
+	for (auto it = ls.begin(); it != ls.end(); ++it){
+		distances2.push_back(it->distance());
 	}
 
-	const long double end = time(0);
+	auto end = time(0);
 	cout << end << endl;
 
 	cout << "Running time when returning copy: " << startSecond - startFirst << endl;
 	cout << "Running time when returning ref: " << end - startSecond << endl;
 }
 
+// ######################################################################################
+
+
+
+// ########################### MAIN ##############################################
 int _tmain(int argc, _TCHAR* argv[])
 {
 	/*
@@ -161,8 +183,14 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	iteratorOperations();*/
 
-	for (int i = 0; i < 1; ++i)
-		testOfIncrementOperation();
+
+	//######################################
+	// For loop that runs the test method of post- and pre-increment
+	//#####################################
+	/*cout << "Starting performance test of post- and pre-increment of iterators(this can take several minutes)" << endl;
+	for (int i = 0; i < 5; ++i)
+		testOfIncrementOperation();*/
+	
 
 	return 0;
 }
